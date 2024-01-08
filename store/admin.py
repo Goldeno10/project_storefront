@@ -3,7 +3,6 @@ from django.db.models.aggregates import Count
 from django.db.models.query import QuerySet
 from django.utils.html import format_html, urlencode
 from django.urls import reverse
-from pkg_resources import cleanup_resources
 from . import models
 
 
@@ -20,14 +19,16 @@ class InventoryFilter(admin.SimpleListFilter):
         if self.value() == '<10':
             return queryset.filter(inventory__lt=10)
 
+
 class ProductImageInline(admin.TabularInline):
     model = models.ProductImage
     readonly_fields = ['thumbnail']
 
     def thumbnail(self, instance):
         if instance.image.name != '':
-            return format_html(f'<img src="{instance.image.url}" class="thumbnail"/>')
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail" />')
         return ''
+
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -36,6 +37,7 @@ class ProductAdmin(admin.ModelAdmin):
         'slug': ['title']
     }
     actions = ['clear_inventory']
+    inlines = [ProductImageInline]
     list_display = ['title', 'unit_price',
                     'inventory_status', 'collection_title']
     list_editable = ['unit_price']
@@ -43,7 +45,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_select_related = ['collection']
     search_fields = ['title']
-    inlines = [ProductImageInline]
 
     def collection_title(self, product):
         return product.collection.title
@@ -59,10 +60,10 @@ class ProductAdmin(admin.ModelAdmin):
         updated_count = queryset.update(inventory=0)
         self.message_user(
             request,
-            f"{updated_count} product{'s' if updated_count > 1 else ''} were successfully updated.",
+            f'{updated_count} products were successfully updated.',
             messages.ERROR
         )
-        
+
     class Media:
         css = {
             'all': ['store/styles.css']
@@ -117,10 +118,10 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 class OrderItemInline(admin.TabularInline):
-    model = models.OrderItem
     autocomplete_fields = ['product']
     min_num = 1
     max_num = 10
+    model = models.OrderItem
     extra = 0
 
 

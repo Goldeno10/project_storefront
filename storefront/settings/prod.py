@@ -4,7 +4,7 @@ from .common import *
 
 DEBUG = False
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRETE_KEY']
 
 ALLOWED_HOSTS = ['e-buy-prod-dff2083f2846.herokuapp.com']
 

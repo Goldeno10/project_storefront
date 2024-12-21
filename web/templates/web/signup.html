@@ -1,0 +1,131 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+
+<title>Sign Up - Your E-Commerce Store</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    .signup-container {
+        max-width: 400px;
+        margin: 100px auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .signup-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .signup-header h2 {
+        color: #e44d26;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .form-group button {
+        background-color: #e44d26;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .form-group button:hover {
+        background-color: #d14020;
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .form-footer p {
+        font-size: 14px;
+        color: #777;
+    }
+
+    .form-footer a {
+        color: #e44d26;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="signup-container">
+    <div class="signup-header">
+        <h2>Create an Account</h2>
+    </div>
+
+    <form id="signupForm">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Confirm Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+
+    <div class="form-footer">
+        <p>Already have an account? <a href="{% url 'web:signin' %}">Log In</a></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('signupForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        // Add your signup logic here
+    });
+</script>
+
+{% endblock %}

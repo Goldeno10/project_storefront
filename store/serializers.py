@@ -1,8 +1,14 @@
 from decimal import Decimal
 from django.db import transaction
 from rest_framework import serializers
+from django.db import models
 from .signals import order_created
-from .models import Cart, CartItem, Customer, Order, OrderItem, Product, Collection, ProductImage, Review
+from .models import (
+    Cart, CartItem, Customer,
+    Order, OrderItem, Product,
+    Collection, ProductImage, Review,
+    Like
+)
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -25,23 +31,61 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
+    collection_name = serializers.StringRelatedField(
+        source='collection', read_only=True)
 
     class Meta:
         model = Product
         fields = ['id', 'title', 'description', 'slug', 'inventory',
-                  'unit_price', 'price_with_tax', 'collection', 'images']
+                  'unit_price', 'price_with_tax', 'collection_name', 'images', 'average_rating', 'likes_count']
 
     price_with_tax = serializers.SerializerMethodField(
         method_name='calculate_tax')
+    likes_count = serializers.SerializerMethodField(
+        method_name='calculate_likes_count')
+    average_rating = serializers.SerializerMethodField(
+        method_name='calculate_average_rating')
 
     def calculate_tax(self, product: Product):
-        return product.unit_price * Decimal(1.1)
+        return round(product.unit_price * Decimal(1.1), 2)
+
+    def calculate_likes_count(self, product: Product):
+        return product.likes.count()
+
+    def calculate_average_rating(self, product: Product):
+        return product.reviews.aggregate(models.Avg('rating'))['rating__avg']
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ['id', 'product_id', 'user_id']
+
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        user_id = self.context['user_id']
+        if Like.objects.filter(product_id=product_id, user_id=user_id).exists():
+            raise serializers.ValidationError(
+                'The user has already liked the product.')
+        return Like.objects.create(product_id=product_id, user_id=user_id)
+
+    def validate_product_id(self, value):
+        if not Product.objects.filter(pk=value).exists():
+            raise serializers.ValidationError(
+                'No product with the given ID was found.')
+        return value
+
+    def validate_user_id(self, value):
+        if not Customer.objects.filter(user_id=value).exists():
+            raise serializers.ValidationError(
+                'No customer with the given ID was found.')
+        return value
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['id', 'date', 'name', 'description']
+        fields = ['id', 'date', 'name', 'description', 'rating']
 
     def create(self, validated_data):
         product_id = self.context['product_id']

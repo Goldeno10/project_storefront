@@ -31,17 +31,22 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third party
     'django_filters',
     'corsheaders',
     'rest_framework',
     'djoser',
     'silk',
-    'playground',
     'debug_toolbar',
+
+    # Local
+    'playground',
     'store',
     'tags',
     'likes',
     'core',
+    'web',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,291 @@
+{% extends 'web/temp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Shop</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Shop</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+
+<!-- Fruits Shop Start-->
+<div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Quality Underwear shop</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords"
+                                aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                            <label for="fruits">Default Sorting:</label>
+                            <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3"
+                                form="fruitform">
+                                <option value="volvo">Nothing</option>
+                                <option value="saab">Popularity</option>
+                                <option value="opel">Men</option>
+                                <option value="audi">Children</option>
+                                <option value="audi">Women</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Callections</h4>
+                                    <ul id="categories-list" class="list-unstyled fruite-categorie">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4 class="mb-2">Price</h4>
+                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput"
+                                        min="1" max="500" value="500" oninput="amount.value=rangeInput.value">
+                                    <output id="amount" name="amount" min-velue="0" max-value="500"
+                                        for="rangeInput">500</output>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center" id="cart-container">
+                            <!-- ============================================= -->
+
+                            <!-- HTML structure for a single product item -->
+                            <div class="col-md-6 col-lg-6 col-xl-4" id="product-template" style="display: none;">
+                                <!-- <div class="col-md-6 col-lg-6 col-xl-4" id="product-template" style="display: none;"> -->
+                                <div class="rounded position-relative fruite-item" style="padding:0;">
+                                    <div class="fruite-img">
+                                        <img src="" class="img-fluid w-100 rounded-top" alt="">
+                                    </div>
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; left: 10px;">Fruits</div>
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <h4></h4>
+                                        <p class="prd-dsc"></p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0"></p>
+                                            <a href="#"
+                                                class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- HTML structure for pagination -->
+                        <div class="col-12">
+                            <div class="pagination d-flex justify-content-center mt-5" id="pagination-container">
+                                <!-- Pagination items will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const productTemplate = document.getElementById('product-template');
+        const cartContainer = document.getElementById('cart-container');
+        const paginationContainer = document.getElementById('pagination-container');
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        let totalItems = 0;
+        let nextPage = null;
+        let previousPage = null;
+
+
+        // Function to create and append product items for a specific page
+        function renderProducts(products) {
+            // Clear the existing products in the container
+            cartContainer.innerHTML = '';
+
+            // Loop through the products for the current page and render them
+            products.forEach(product => {
+                const clone = productTemplate.cloneNode(true);
+                clone.style.display = ''; // Make the cloned template visible
+
+                // Update the cloned template with product data
+                clone.querySelector('.img-fluid').src = product.images[0] || 'https://www-konga-com-res.cloudinary.com/w_400,f_auto,fl_lossy,dpr_3.0,q_auto/media/catalog/product/N/C/147518_1663710937.jpg';
+                clone.querySelector('h4').textContent = product.title.substring(0, 20);
+                clone.querySelector('p').textContent = product.description.substring(0, 85);
+
+                clone.querySelector('.fs-5').textContent = `$${product.unit_price.toFixed(2)}`;
+
+                // Add event listener for the "Add to cart" button if needed
+
+                // Append the cloned template to the container
+                cartContainer.appendChild(clone);
+            });
+        }
+
+        // Function to create and append pagination items
+        function renderPagination() {
+            // Clear the existing pagination items
+            paginationContainer.innerHTML = '';
+
+            // Calculate the total number of pages
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            // Calculate the start and end range for pagination display
+            let startRange = Math.max(1, currentPage - 5);
+            let endRange = Math.min(totalPages, startRange + 9);
+
+            // Loop through the pagination range and create pagination items
+            for (let page = startRange; page <= endRange; page++) {
+                const paginationItem = document.createElement('a');
+                paginationItem.href = '#';
+                paginationItem.classList.add('rounded');
+                paginationItem.textContent = page;
+
+                // Add an 'active' class to the current page
+                if (page === currentPage) {
+                    paginationItem.classList.add('active');
+                }
+
+                // Add event listener for pagination item click
+                paginationItem.addEventListener('click', () => {
+                    currentPage = page;
+                    fetchAndRenderProducts();
+                });
+
+                // Append the pagination item to the container
+                paginationContainer.appendChild(paginationItem);
+            }
+
+            // Add "Previous" and "Next" buttons based on API response
+            if (previousPage) {
+                const prevButton = document.createElement('a');
+                prevButton.href = '#';
+                prevButton.classList.add('rounded');
+                prevButton.textContent = '«';
+                prevButton.addEventListener('click', () => {
+                    currentPage--;
+                    fetchAndRenderProducts();
+                });
+                paginationContainer.insertBefore(prevButton, paginationContainer.firstChild);
+            }
+
+            if (nextPage) {
+                const nextButton = document.createElement('a');
+                nextButton.href = '#';
+                nextButton.classList.add('rounded');
+                nextButton.textContent = '»';
+                nextButton.addEventListener('click', () => {
+                    currentPage++;
+                    fetchAndRenderProducts();
+                });
+                paginationContainer.appendChild(nextButton);
+            }
+        }
+
+        // Function to fetch products from the API and render them
+        function fetchAndRenderProducts() {
+            fetch(`/store/products/?page=${currentPage}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if there are products
+                    if (data.results && data.results.length > 0) {
+                        totalItems = data.count;
+                        nextPage = data.next;
+                        previousPage = data.previous;
+
+                        renderProducts(data.results);
+                        renderPagination();
+                    } else {
+                        console.error('No products found');
+                    }
+                })
+                .catch(error => console.error('Error fetching products:', error));
+        }
+
+
+        function fetchProductsByCollection(collectionId) {
+            fetch(`/store/products/?collection_id=${collectionId}&page=${currentPage}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        totalItems = data.count;
+                        nextPage = data.next;
+                        previousPage = data.previous;
+
+                        renderProducts(data.results);
+                        renderPagination();
+                    } else {
+                        console.error('No products found for this collection');
+                    }
+                })
+                .catch(error => console.error('Error fetching products:', error));
+        }
+
+        // Function to handle category click event
+        function handleCategoryClick(event, collectionId) {
+            event.preventDefault();
+            currentPage = 1;
+            fetchProductsByCollection(collectionId);
+        }
+
+        // Initial fetch and render on page load
+        fetchAndRenderProducts();
+
+        var apiUrl = '/store/collections/';
+        let categories = document.getElementById('categories-list');
+
+        // Fetch data from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Filter categories with items
+                var categoriesWithItems = data.filter(function (category) {
+                    return category.products_count > 0;
+                });
+
+                // Generate dynamic HTML for each category
+                categoriesWithItems.forEach(function (category) {
+                    var categoryHtml = '<li>' +
+                        '<div class="d-flex justify-content-between fruite-name">' +
+                        '<a href="#" data-collection-id="' + category.id + '">' +
+                        '<i class="fas fa-apple-alt me-2"></i>' +
+                        category.title +
+                        '</a>' +
+                        '<span>(' + category.products_count + ')</span>' +
+                        '</div>' +
+                        '</li>';
+
+                    categories.innerHTML += categoryHtml;
+                });
+
+                // Add event listeners to category links
+                document.querySelectorAll('#categories-list a').forEach(function (link) {
+                    link.addEventListener('click', function (event) {
+                        const collectionId = link.getAttribute('data-collection-id');
+                        handleCategoryClick(event, collectionId);
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,201 @@
+{% load static %}
+<style>
+    .navbar {
+        margin: 0 20px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+
+    #top-search-btn {
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: black;
+        border: 1px solid darkgoldenrod;
+        border-radius: 0.25rem;
+        padding: 0.375rem 0.75rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        width: 500px;
+        height: 35px;
+    }
+
+    #top-search-btn:hover {
+        background-color: darkgoldenrod;
+        border-color: #0056b3;
+
+    }
+
+    .DocSearch-Button-Container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .DocSearch-Search-Icon {
+        margin-right: 0.5rem;
+    }
+
+    .DocSearch-Button-Placeholder {
+        font-weight: 500;
+    }
+
+    #all-cat {
+        border: none;
+    }
+
+    #cart-badge {
+        font-size: .5em;
+        position: relative;
+        bottom: 50px;
+        left: 20px;
+        background-color: darkgoldenrod;
+    }
+
+    .icon-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        width: 200px;
+
+    }
+
+    .container-fluid {
+        flex-wrap: nowrap !important;
+    }
+
+    #user-icon,
+    .icon-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-link {
+        margin: 0 10px
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+
+    }
+</style>
+
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a href="{% url 'web:home' %}" class="navbar-brand" href="#">X-STORE</a>
+
+            <button id="top-search-btn" type="button" class="bbtn search-btn" data-bs-toggle="modal"
+                data-bs-target="#searchModal">
+                <div class="dropdown">
+                    <a id="all-cat" class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        All categories
+                    </a>
+
+                    <ul class="dropdown-menu" id="dropdownMenu">
+                        <li class="dropdown-item" id="dropdownItemTemplate" style="display: none;">
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                </div>
+                <span class="DocSearch-Button-Container">
+
+
+                    <!-- <span class="DocSearch-Button-Placeholder">Search</span> -->
+                    <input style="margin-left:5px; width: -webkit-fill-available; height: 30px;"
+                        class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+                        <path
+                            d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+                            stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round"
+                            stroke-linejoin="round">
+                        </path>
+                    </svg>
+                </span>
+
+            </button>
+
+            <!-- <div class="navbar-nav ms-auto"> -->
+            <div class="icon-links">
+                <a class="nav-link" href="{% url 'web:signup' %}">
+                    <span id="user-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                            class="bi bi-person" viewBox="0 0 16 16">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                        </svg>
+                        <span>
+                            <h4 style="font-size: .5rem;">Login/Register</h4>
+                        </span>
+                    </span>
+                </a>
+                <a class="nav-link" style="height: 40px" href="{% url 'web:cart' %}">
+                    <span>
+                        <span class="icon-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                class="bi bi-cart4" viewBox="0 0 16 16">
+                                <path
+                                    d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+                            </svg>
+                            <span>
+                                <h4 style="font-size: .5rem;">Cart</h4>
+                            </span>
+                        </span>
+
+                        <span id="cart-badge" class="badge">4</span>
+                    </span>
+                </a>
+                <a class="nav-link" style="height: 40px" href="{% url 'web:wishlist' %}">
+                    <span>
+                        <span class="icon-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                class="bi bi-heart" viewBox="0 0 16 16">
+                                <path
+                                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                            </svg>
+                            <span>
+                                <h4 style="font-size: .5rem;">Wishlist</h4>
+                            </span>
+                        </span>
+                        <span id="cart-badge" class="badge">5</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        </div>
+    </nav>
+</header>
+
+<script>
+    // Function to populate the dropdown menu
+    function populateDropdownItem(category) {
+        const dropdownItemClone = document.getElementById('dropdownItemTemplate').cloneNode(true);
+        dropdownItemClone.style.display = 'block';
+
+        const dropdownItemLink = dropdownItemClone.querySelector('a');
+        dropdownItemLink.href = `/web/category-detail/${category.id}`;
+        dropdownItemLink.textContent = category.title;
+
+        // Append the dropdown item to the menu
+        document.getElementById('dropdownMenu').appendChild(dropdownItemClone);
+    }
+
+    // Make fetch request for categories
+    fetch('/store/collections/')
+        .then(response => response.json())
+        .then(data => {
+            const categories = data;
+            categories.forEach(category => {
+                populateDropdownItem(category);
+            });
+        })
+        .catch(error => console.error('Error fetching categories:', error));
+</script>

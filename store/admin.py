@@ -39,12 +39,15 @@ class ProductAdmin(admin.ModelAdmin):
     actions = ['clear_inventory']
     inlines = [ProductImageInline]
     list_display = ['title', 'unit_price',
-                    'inventory_status', 'collection_title']
+                    'inventory_status', 'collection_title', 'likes_count']
     list_editable = ['unit_price']
     list_filter = ['collection', 'last_update', InventoryFilter]
     list_per_page = 10
     list_select_related = ['collection']
     search_fields = ['title']
+
+    def likes_count(self, product):
+        return product.likes.count()
 
     def collection_title(self, product):
         return product.collection.title

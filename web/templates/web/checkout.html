@@ -1,0 +1,158 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+
+<title>Checkout - Your E-Commerce Store</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    .checkout-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .checkout-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .checkout-header h2 {
+        color: #e44d26;
+        /* Adjusted to match the previous color scheme */
+    }
+
+    .order-summary,
+    .payment-details {
+        margin-bottom: 20px;
+    }
+
+    .order-summary h3,
+    .payment-details h3 {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .order-summary table,
+    .payment-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .order-summary th,
+    .order-summary td,
+    .payment-details th,
+    .payment-details td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .total-amount {
+        font-weight: bold;
+    }
+
+    .checkout-button {
+        background-color: #e44d26;
+        /* Adjusted to match the previous color scheme */
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .checkout-button:hover {
+        background-color: #d14020;
+        /* Adjusted to match the previous color scheme */
+    }
+</style>
+
+<div class="checkout-container">
+    <div class="checkout-header">
+        <h2>Checkout</h2>
+    </div>
+
+    <div class="order-summary">
+        <h3>Order Summary</h3>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            <!-- Dynamically add order summary items here -->
+        </table>
+        <div class="total-amount" id="totalAmount">Total: $0.00</div>
+    </div>
+
+    <div class="payment-details">
+        <h3>Payment Details</h3>
+        <table>
+            <tr>
+                <th>Card Number</th>
+                <td>**** **** **** 1234</td>
+            </tr>
+            <tr>
+                <th>Expiry Date</th>
+                <td>12/23</td>
+            </tr>
+            <tr>
+                <th>CVV</th>
+                <td>***</td>
+            </tr>
+        </table>
+    </div>
+
+    <button class="checkout-button">Place Order</button>
+</div>
+
+<script>
+    // Sample order data
+    var orderData = [
+        { product: 'Product Name 1', quantity: 2, price: 50.00 },
+        { product: 'Product Name 2', quantity: 1, price: 30.00 }
+        // Add more items as needed
+    ];
+
+    // Function to dynamically add order summary items
+    function populateOrderSummary() {
+        var orderSummaryTable = document.querySelector('.order-summary table');
+        var totalAmountElement = document.getElementById('totalAmount');
+        var totalAmount = 0;
+
+        orderData.forEach(function (item) {
+            var row = orderSummaryTable.insertRow(-1);
+            var cellProduct = row.insertCell(0);
+            var cellQuantity = row.insertCell(1);
+            var cellPrice = row.insertCell(2);
+
+            cellProduct.textContent = item.product;
+            cellQuantity.textContent = item.quantity;
+            cellPrice.textContent = '$' + (item.quantity * item.price).toFixed(2);
+
+            totalAmount += item.quantity * item.price;
+        });
+
+        totalAmountElement.textContent = 'Total: $' + totalAmount.toFixed(2);
+    }
+
+    // Call the function to populate order summary
+    populateOrderSummary();
+</script>
+
+{% endblock %}

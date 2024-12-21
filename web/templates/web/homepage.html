@@ -1,0 +1,695 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>My E-commerce Store</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+<style>
+  .home-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    margin: 20px 20px 50px 20px;
+  }
+
+  .categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px #e5e5e5;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .side-bar {
+    width: 20%;
+    height: 100%;
+    background-color: #f5f5f5;
+    margin-right: 20px;
+  }
+
+  .side-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .cat-item {
+    width: -webkit-fill-available;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    border: none;
+
+  }
+
+  .side-bar ul li:hover {
+    background-color: #e5e5e5;
+  }
+
+  #products-e {
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+  }
+
+  .product-card {
+    width: 250px;
+    height: 410px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #e5e5e5;
+  }
+
+  .product-card:hover {
+    box-shadow: 0 0 10px #ccc;
+    transform: scale(1.01);
+    translate: 0.5s;
+
+  }
+
+  .product-image {
+    max-width: 100%;
+    width: 100%;
+    height: 250px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #e5e5e5;
+
+
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .product-info {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 5px;
+  }
+
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .product-price {
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+  }
+
+
+  .btn-add-to-cart {
+    width: 100%;
+    height: 50px;
+    background-color: tan;
+    border-radius: 0 0 10px 10px;
+    border: none;
+  }
+
+  .rating {
+    margin-top: 10px;
+  }
+
+  .star {
+    font-size: 20px;
+    cursor: pointer;
+    color: #ccc;
+  }
+
+  .star:hover,
+  .star.active {
+    color: #f8d829;
+  }
+
+  .brands {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px #e5e5e5;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .brand-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    border: 1px solid #ccc;
+  }
+
+  .brands {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .brand-lb {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .brand-item {
+    list-style: none;
+    margin-bottom: 5px;
+  }
+
+  .brand-item input {
+    display: none;
+
+  }
+
+  .brand-item input:checked+label {
+    background-color: #e6f7ff;
+  }
+</style>
+<style>
+  .range {
+    padding: 20px;
+  }
+
+  .range-slider {
+    height: 5px;
+    position: relative;
+    background-color: #e1e9f6;
+    border-radius: 2px;
+  }
+
+  .range-selected {
+    height: 100%;
+    left: 30%;
+    right: 30%;
+    position: absolute;
+    border-radius: 5px;
+    background-color: darkgoldenrod;
+  }
+
+  .range-input {
+    position: relative;
+  }
+
+  .range-input input {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    top: -7px;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .range-input input::-webkit-slider-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 3px solid darkgoldenrod;
+    background-color: #fff;
+    pointer-events: auto;
+    -webkit-appearance: none;
+  }
+
+  .range-input input::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: 3px solid darkgoldenrod;
+    background-color: #fff;
+    pointer-events: auto;
+    -moz-appearance: none;
+  }
+
+  .range-price {
+    margin: 30px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .range-price label {
+    margin-right: 5px;
+  }
+
+  .range-price input {
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .range-price input:first-of-type {
+    margin-right: 15px;
+  }
+
+  .price-filter-btn {
+    width: 100px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkgoldenrod;
+    color: #fff;
+    font-weight: bold;
+    border: 1px solid darkgoldenrod;
+    cursor: pointer;
+  }
+
+  .price-filter-btn:hover {
+    background-color: #fff;
+    color: darkgoldenrod;
+    border: 1px solid darkgoldenrod;
+  }
+
+  .price-filter-btn:focus {
+    outline: none;
+  }
+
+  .pr-ftr-h {
+    margin-bottom: 25px;
+    font-size: 1.3rem;
+
+  }
+
+  .pr-lf {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 20px;
+    padding: 2px;
+  }
+
+  .sp-lf {
+    font-size: 0.8rem;
+  }
+</style>
+<div class="home-page">
+  <div class="side-bar">
+    <div>
+      <h2>collections</h2>
+      <ul class="categories" id="categoriesContainer">
+        <li class="cat-item" id="categoryTemplate" style="display: none;">
+          <span class="category-title"></span>
+          <span class="product-count"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="rating-filter">
+      <h2>Rating</h2>
+      <div class="rating">
+        {% for i in "123456" %}
+        {% if forloop.counter <= 4 %} <span class="star active" onclick="setRating({{ i }})">&#9733;</span>
+          {% else %}
+          <span class="star" onclick="setRating('{{ i }}')">&#9733;</span>
+          {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+
+    <div class="range">
+      <h2 class="pr-ftr-h">Price(NAIRA)</h2>
+      <div class="range-slider">
+        <span class="range-selected"></span>
+      </div>
+      <div class="range-input">
+        <input type="range" class="min" min="1" max="10000" value="3000" step="1">
+        <input type="range" class="max" min="1" max="10000" value="7000" step="1">
+      </div>
+      <div class="range-price">
+        <!-- <label for="min">Min</label> -->
+        <input type="number" name="min" value="3000">
+        <!-- <label for="max">Max</label> -->
+        <span style="width: 10px;
+                font-size: xxx-large;
+                margin-right: 20px;
+                color: darkgoldenrod;">-</span>
+        <input type="number" name="max" value="7000">
+      </div>
+      <button class="price-filter-btn">Filter</button>
+    </div>
+    <h2>Brands</h2>
+    <ul class="brands">
+      <li class="brand-item">
+        <input type="checkbox" id="brand1"><label class="brand-lb" for="brand1"><span>Brand
+            1</span><span>120</span></label>
+      </li>
+      <li class="brand-item">
+        <input type="checkbox" id="brand2"><label class="brand-lb" for="brand2"><span>Brand
+            2</span><span>20</span></label>
+      </li>
+      <li class="brand-item">
+        <input type="checkbox" id="brand3"><label class="brand-lb" for="brand3"><span>Brand
+            3</span><span>10</span></label>
+      </li>
+      <li class="brand-item">
+        <input type="checkbox" id="brand4">
+        <label class="brand-lb" for="brand4"> <span>Brand 4</span><span>12</span></label>
+      </li>
+      <li class="brand-item">
+        <input type="checkbox" id="brand5"><label class="brand-lb" for="brand5"><span>Brand
+            5</span><span>70</span></label>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Product List Container -->
+  <div id="products-e">
+    <div class="product-card" id="productCardTemplate" style="display: none;">
+      <a href="#" style="width: 100%; height: 100%;">
+        <div class="product-image">
+          <img src="" alt="product-image">
+        </div>
+      </a>
+      <div class="product-info">
+        <h5 class="product-name" style="text-wrap: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1rem;">
+        </h5>
+        <div class="pr-lf">
+          <span class="product-price"><span></span></span>
+          <p><span class="sp-lf"></span></p>
+        </div>
+        <div class="rating"></div>
+        <button class="btn-add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Product List Container -->
+
+<!-- Pagination Controls -->
+<div id="pagination-controls">
+  <button id="prev-page" onclick="changePage(-1)">Previous</button>
+  <button id="next-page" onclick="changePage(1)">Next</button>
+</div>
+<!-- Pagination Controls -->
+<script>
+  function setRating(rating) {
+    document.querySelectorAll('.star').forEach((star, index) => {
+      star.classList.remove('active');
+      if (index < rating) {
+        star.classList.add('active');
+      }
+    });
+  }
+
+  function submitRating(productId) {
+    const selectedRating = document.querySelectorAll('.star.active').length;
+
+    fetch('/api/rate-product', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+      body: JSON.stringify({
+        productId: productId,
+        rating: selectedRating,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
+
+<script>
+  let page = 1; // Initial page number
+  const pageSize = 10; // Number of products to load per page
+  let loading = false; // Flag to prevent multiple simultaneous requests
+
+  // Function to fetch and append products
+  function fetchAndAppendProducts() {
+    if (loading) return;
+
+    loading = true;
+    fetch(`/store/products/?page=${page}&page_size=${pageSize}`)
+      .then(response => response.json())
+      .then(data => {
+        const products = data.results;
+        const productsContainer = document.getElementById('products-e');
+
+        products.forEach(product => {
+          const productCardClone = document.getElementById('productCardTemplate').cloneNode(true);
+          productCardClone.style.display = 'block';
+
+          // Populate the product card with data (similar to the previous example)
+          populateProductCard(product, productCardClone);
+
+          // Append the product card to the container
+          productsContainer.appendChild(productCardClone);
+        });
+
+        loading = false;
+        page++;
+
+        // Check if there are more pages
+        if (data.next === null) {
+          // No more pages, remove the intersection observer
+          observer.disconnect();
+        }
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  }
+
+  // Function to set the rating
+  function setRating(rating) {
+    // Your rating logic here
+    console.log('Rating set:', rating);
+  }
+
+  // Function to populate the product card
+  function populateProductCard(product, cardClone) {
+    const cardLink = cardClone.querySelector('a');
+    const cardImage = cardClone.querySelector('.product-image img');
+    const cardName = cardClone.querySelector('.product-name');
+    const cardPrice = cardClone.querySelector('.product-price span');
+    const cardInventory = cardClone.querySelector('.sp-lf');
+    const cardRating = cardClone.querySelector('.rating');
+    const cardAddToCartBtn = cardClone.querySelector('.btn-add-to-cart');
+
+    // Populate product card with data
+    cardLink.href = `/home/product-detail/${product.id}`;
+    cardImage.src = product.images.length > 0 ? product.images[0] : 'https://www-konga-com-res.cloudinary.com/w_400,f_auto,fl_lossy,dpr_3.0,q_auto/media/catalog/product/N/C/147518_1663710937.jpg';
+    cardName.textContent = product.title;
+    cardPrice.innerHTML = `$${product.unit_price} <span style="text-decoration: line-through;">$${product.price_with_tax}</span>`;
+    cardInventory.textContent = `${product.inventory} left`;
+
+    // Clear previous rating
+    cardRating.innerHTML = '';
+
+    // Populate rating
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('span');
+      star.className = i <= 4 ? 'star active' : 'star';
+      star.innerHTML = '&#9733;';
+      star.onclick = () => setRating(i);
+      cardRating.appendChild(star);
+    }
+
+    cardAddToCartBtn.addEventListener('click', () => {
+      // Add to cart logic here
+      console.log('Add to cart clicked for product:', product.id);
+    });
+  }
+
+  // Intersection Observer to detect when the last item is in view
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      // Load more products when the last item is in view
+      fetchAndAppendProducts();
+    }
+  }, { threshold: 0.1 });
+
+  // Observe the last product card
+  const lastProductCard = document.getElementById('products-e').lastElementChild;
+  observer.observe(lastProductCard);
+
+  // Initial load of products
+  fetchAndAppendProducts();
+
+  // Function to populate the category
+  function populateCategory(category) {
+    if (category.products_count === 0) {
+      return;
+    }
+    const categoryClone = document.getElementById('categoryTemplate').cloneNode(true);
+    categoryClone.style.display = 'flex';
+
+    const categoryTitle = categoryClone.querySelector('.category-title');
+    const productCount = categoryClone.querySelector('.product-count');
+
+    categoryTitle.textContent = category.title;
+    productCount.textContent = category.products_count;
+
+    // Append the category to the container where you want to display it
+    document.getElementById('categoriesContainer').appendChild(categoryClone);
+  }
+
+  // Make fetch request for categories
+  fetch('/store/collections/')
+    .then(response => response.json())
+    .then(data => {
+      const categories = data;
+      categories.forEach(category => {
+        populateCategory(category);
+      });
+    })
+    .catch(error => console.error('Error fetching categories:', error));
+</script>
+
+
+<script>
+  // let page = 1; // Initial page number
+  // const pageSize = 10; // Number of products to load per page
+  // let loading = false; // Flag to prevent multiple simultaneous requests
+  let filters = { // Filters object
+    collection_id: null,
+    unit_price_gt: null,
+    unit_price_lt: null,
+  };
+
+  // Fetch and Append Products with Pagination and Filters
+  function fetchAndAppendProducts() {
+    if (loading) return;
+    loading = true;
+
+    // Build the query string based on filters
+    let query = `/store/products/?page=${page}&page_size=${pageSize}`;
+    Object.keys(filters).forEach(key => {
+      if (filters[key] !== null) {
+        query += `&${key}=${filters[key]}`;
+      }
+    });
+
+    fetch(query)
+      .then(response => response.json())
+      .then(data => {
+        if (page === 1) document.getElementById('products-e').innerHTML = ''; // Clear products for the first page or new filters
+        populateProducts(data.results); // Function to populate products
+        loading = false;
+        updatePaginationControls(data.next, data.previous); // Function to update pagination controls
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  }
+
+  // Change Page
+  function changePage(direction) {
+    page += direction;
+    if (page < 1) page = 1; // Prevent going below page 1
+    fetchAndAppendProducts(); // Fetch products for the new page
+  }
+
+  // Apply Price Filter
+  function applyPriceFilter() {
+    const minPrice = document.querySelector('input[name="min"]').value;
+    const maxPrice = document.querySelector('input[name="max"]').value;
+    filters.unit_price_gt = minPrice;
+    filters.unit_price_lt = maxPrice;
+    page = 1; // Reset to page 1 for new filters
+    fetchAndAppendProducts();
+  }
+
+  // Populate Products (similar to your existing populateProductCard function)
+  function populateProducts(products) {
+    const productsContainer = document.getElementById('products-e');
+    products.forEach(product => {
+      const productCardClone = document.getElementById('productCardTemplate').cloneNode(true);
+      populateProductCard(product, productCardClone); // Assume this function is defined
+      productsContainer.appendChild(productCardClone);
+    });
+  }
+
+  // Update Pagination Controls
+  function updatePaginationControls(next, previous) {
+    document.getElementById('next-page').disabled = !next;
+    document.getElementById('prev-page').disabled = !previous;
+  }
+
+  // Initial Load of Products
+  fetchAndAppendProducts();
+
+</script>
+
+
+
+<script>
+  let rangeMin = 100;
+  const range = document.querySelector(".range-selected");
+  const rangeInput = document.querySelectorAll(".range-input input");
+  const rangePrice = document.querySelectorAll(".range-price input");
+  rangeInput.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      let minRange = parseInt(rangeInput[0].value);
+      let maxRange = parseInt(rangeInput[1].value);
+      if (maxRange - minRange < rangeMin) {
+        if (e.target.className === "min") {
+          rangeInput[0].value = maxRange - rangeMin;
+        } else {
+          rangeInput[1].value = minRange + rangeMin;
+        }
+      } else {
+        rangePrice[0].value = minRange;
+        rangePrice[1].value = maxRange;
+        range.style.left = (minRange / rangeInput[0].max) * 100 + "%";
+        range.style.right = 100 - (maxRange / rangeInput[1].max) * 100 + "%";
+      }
+    });
+  });
+
+  rangePrice.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      let minPrice = rangePrice[0].value;
+      let maxPrice = rangePrice[1].value;
+      if (maxPrice - minPrice >= rangeMin && maxPrice <= rangeInput[1].max) {
+        if (e.target.className === "min") {
+          rangeInput[0].value = minPrice;
+          range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+        } else {
+          rangeInput[1].value = maxPrice;
+          range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+        }
+      }
+    });
+  });
+</script>
+{% endblock %}

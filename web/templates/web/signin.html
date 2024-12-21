@@ -1,0 +1,139 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sign In - Your E-Commerce Store</title>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    .signin-container {
+        max-width: 400px;
+        margin: 100px auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .signin-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .signin-header h2 {
+        color: #e44d26;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .form-group button {
+        background-color: #e44d26;
+        /* Adjusted to match the previous color scheme */
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .form-group button:hover {
+        background-color: #d14020;
+        /* Adjusted to match the previous color scheme */
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .form-footer p {
+        font-size: 14px;
+        color: #777;
+    }
+
+    .form-footer a {
+        color: #e44d26;
+        /* Adjusted to match the previous color scheme */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+<div class="signin-container">
+    <div class="signin-header">
+        <h2>Sign In</h2>
+    </div>
+
+    <form id="signinForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Sign In</button>
+        </div>
+    </form>
+
+    <div class="form-footer">
+        <p>Don't have an account? <a href="{% url 'web:signup' %}">Sign Up</a></p>
+        <!-- Add the "Sign In with Google" button -->
+        <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
+    </div>
+</div>
+
+<!-- Include the Google Sign-In API script -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script>
+    document.getElementById('signinForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+    });
+
+    // Callback function for successful Google sign-in
+    function onGoogleSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('Google sign-in successful:', profile.getName());
+    }
+</script>
+
+
+{% endblock %}

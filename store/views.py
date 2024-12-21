@@ -11,17 +11,27 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status
 from .filters import ProductFilter
-from .models import Cart, CartItem, Collection, Customer, Order, OrderItem, Product, ProductImage, Review
-from .serializers import AddCartItemSerializer, CartItemSerializer, CartSerializer, CollectionSerializer, CreateOrderSerializer, CustomerSerializer, OrderSerializer, ProductImageSerializer, ProductSerializer, ReviewSerializer, UpdateCartItemSerializer, UpdateOrderSerializer
+from .models import (
+    Cart, CartItem, Collection, Customer,
+    Order, OrderItem, Product, ProductImage, Review, Like
+)
+from .serializers import (
+    AddCartItemSerializer, CartItemSerializer, CartSerializer,
+    CollectionSerializer, CreateOrderSerializer, CustomerSerializer,
+    OrderSerializer, ProductImageSerializer, ProductSerializer,
+    ReviewSerializer, UpdateCartItemSerializer, UpdateOrderSerializer,
+    LikeSerializer
+)
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.prefetch_related('images').all()
+    queryset = Product.objects.prefetch_related(
+        'images').prefetch_related('likes').all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
     pagination_class = DefaultPagination
-    permission_classes = [IsAdminOrReadOnly]
+    # permission_classes = [IsAdminOrReadOnly]
     search_fields = ['title', 'description']
     ordering_fields = ['unit_price', 'last_update']
 
@@ -33,6 +43,40 @@ class ProductViewSet(ModelViewSet):
             return Response({'error': 'Product cannot be deleted because it is associated with an order item.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
         return super().destroy(request, *args, **kwargs)
+
+
+class LikeViewSet(ModelViewSet):
+    serializer_class = LikeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # return Product.objects.get(id=self.kwargs['product_pk']).likes.all()
+        if self.request.user.is_staff:
+            return Like.objects.filter(product_id=self.kwargs['product_pk']).all()
+        return Like.objects.filter(product_id=self.kwargs['product_pk'], user_id=self.request.user.id)
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk'], 'user_id': self.request.user.id if self.request.user.is_authenticated else None}
+
+    def create(self, request, *args, **kwargs):
+        serializer = LikeSerializer(
+            data=request.data, context=self.get_serializer_context())
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['delete'])
+    def unlike(self, request, *args, **kwargs):
+        product_id = self.kwargs['product_pk']
+        user_id = self.request.user.id
+
+        # Check if the like exists
+        like = get_object_or_404(Like, product_id=product_id, user_id=user_id)
+
+        # Delete the like
+        like.delete()
+
+        return Response({"detail": "Product unliked successfully."}, status=status.HTTP_204_NO_CONTENT)
 
 
 class CollectionViewSet(ModelViewSet):

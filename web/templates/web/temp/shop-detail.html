@@ -1,0 +1,571 @@
+{% extends 'web/temp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Shop Detail</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item active text-white">Shop Detail</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+pr
+<!-- Single Product Start -->
+<div class="container-fluid py-5 mt-5">
+    <div class="container py-5">
+        <div class="row g-4 mb-5">
+            <div class="col-lg-8 col-xl-9">
+                <!-- Single Product End -->
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="border rounded">
+                            <a href="#" id="product-image-link">
+                                <img src="https://www-konga-com-res.cloudinary.com/w_400,f_auto,fl_lossy,dpr_3.0,q_auto/media/catalog/product/N/C/147518_1663710937.jpg"
+                                    class="img-fluid rounded" alt="Product Image" id="product-image">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" id="product-details">
+                        <h4 class="fw-bold mb-3" id="product-title">Loading...</h4>
+                        <p class="mb-3" id="product-category">Loading</p>
+                        <h5 class="fw-bold mb-3" id="product-price">Loading...</h5>
+                        <div class="d-flex mb-2" id="star-rating"></div>
+                        <p class="mb-4" id="product-description">Loading...</p>
+                        <div class="input-group quantity mb-4" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <nav>
+                        <div class="nav nav-tabs mb-3">
+                            <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
+                                aria-controls="nav-about" aria-selected="true">Description</button>
+                            <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                        </div>
+                    </nav>
+                    <div class="tab-content mb-5">
+                        <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <p id="product-description-all">Loading...</p>
+                        </div>
+                        <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                            <div id="reviews-list">
+                                <!-- Reviews will be populated here dynamically -->
+                            </div>
+                        </div>
+                        <!-- <div class="tab-pane" id="nav-vision" role="tabpanel">
+                            <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit.
+                                Aliqu diam
+                                amet diam et eos labore. 3</p>
+                            <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
+                                Clita erat ipsum
+                                et lorem et sit</p>
+                        </div> -->
+                    </div>
+                </div>
+
+                <form id="review-form">
+                    <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="border-bottom rounded">
+                                <input type="text" id="name" class="form-control border-0 me-4"
+                                    placeholder="Your Name *">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="border-bottom rounded">
+                                <input type="email" id="email" class="form-control border-0" placeholder="Your Email *">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="border-bottom rounded my-4">
+                                <textarea id="review" class="form-control border-0" cols="30" rows="8"
+                                    placeholder="Your Review *" spellcheck="false"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between py-3 mb-5">
+                                <div class="d-flex align-items-center">
+                                    <p class="mb-0 me-3">Please rate:</p>
+                                    <div class="d-flex align-items-center" style="font-size: 12px;">
+                                        <i class="fa fa-star text-muted review-star"></i>
+                                        <i class="fa fa-star text-muted review-star"></i>
+                                        <i class="fa fa-star text-muted review-star"></i>
+                                        <i class="fa fa-star text-muted review-star"></i>
+                                        <i class="fa fa-star text-muted review-star"></i>
+                                    </div>
+
+                                </div>
+                                <button type="submit"
+                                    class="btn border border-secondary text-primary rounded-pill px-4 py-3">Post
+                                    Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- XXXXXXXXXXXXXXXXXXXXXxxx -->
+            <div class="col-lg-4 col-xl-3">
+                <div class="row g-4 fruite">
+                    <div class="col-lg-12">
+                        <div class="input-group w-100 mx-auto d-flex mb-4">
+                            <input type="search" class="form-control p-3" placeholder="keywords"
+                                aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                        <div class="mb-4">
+                            <h4>Categories</h4>
+                            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+                            <ul id="categories-list" class="list-unstyled fruite-categorie">
+                            </ul>
+                            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <h4 class="mb-4">Featured products</h4>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <div class="rounded" style="width: 100px; height: 100px;">
+                                <img src="img/featur-1.jpg" class="img-fluid rounded" alt="Image">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Big Banana</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">2.99 $</h5>
+                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <div class="rounded" style="width: 100px; height: 100px;">
+                                <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Big Banana</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">2.99 $</h5>
+                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <div class="rounded" style="width: 100px; height: 100px;">
+                                <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Big Banana</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">2.99 $</h5>
+                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                <img src="img/vegetable-item-4.jpg" class="img-fluid rounded" alt="">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Big Banana</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">2.99 $</h5>
+                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                <img src="img/vegetable-item-5.jpg" class="img-fluid rounded" alt="">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Big Banana</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">2.99 $</h5>
+                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                <img src="img/vegetable-item-6.jpg" class="img-fluid rounded" alt="">
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Big Banana</h6>
+                                <div class="d-flex mb-2">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h5 class="fw-bold me-2">2.99 $</h5>
+                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center my-4">
+                            <a href="#"
+                                class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew
+                                More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+        </div>
+    </div>
+    <h1 class="fw-bold mb-0">Related products</h1>
+    <!-- <div class="vesitable"> -->
+    <div class="owl-carousel vegetable-carousel justify-content-center" id="related-products-carousel"></div>
+
+
+    <div class="border border-primary rounded position-relative vesitable-item">
+        <div class="vesitable-img">
+            <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
+        </div>
+        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+            Vegetable</div>
+        <div class="p-4 pb-0 rounded-bottom">
+            <h4>Parsely</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+            <div class="d-flex justify-content-between flex-lg-wrap">
+                <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
+                <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i
+                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>
+</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const productId = 648; // Sample product ID
+
+        fetch(`http://127.0.0.1:8000/store/products/${productId}`)
+            .then(response => response.json())
+            .then(product => {
+                const { title, description, unit_price, average_rating, collection_name } = product;
+
+                document.getElementById('product-title').textContent = title;
+                document.getElementById('product-price').textContent = `${unit_price} $`;
+                document.getElementById('product-category').textContent = `Collection: ${collection_name}`;
+
+                const starRatingContainer = document.getElementById('star-rating');
+                starRatingContainer.innerHTML = generateStarRating(average_rating);
+
+                document.getElementById('product-description').textContent = description.substring(0, 200);
+
+                // Optionally, you can update the product image link
+                const productImageLink = document.getElementById('product-image-link');
+                productImageLink.href = '#';
+
+                const productImage = document.getElementById('product-image');
+                productImage.src = 'https://www-konga-com-res.cloudinary.com/w_400,f_auto,fl_lossy,dpr_3.0,q_auto/media/catalog/product/N/C/147518_1663710937.jpg';
+                productImage.alt = title;
+            })
+            .catch(error => console.error('Error fetching product details:', error));
+    });
+
+    // Function to generate star rating HTML dynamically
+    function generateStarRating(rating) {
+        const maxRating = 5;
+        let starsHtml = '';
+
+        for (let i = 1; i <= maxRating; i++) {
+            if (i <= rating) {
+                starsHtml += '<i class="fa fa-star text-secondary"></i>';
+            } else {
+                starsHtml += '<i class="fa fa-star"></i>';
+            }
+        }
+
+        return starsHtml;
+    }
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const productId = 648; // Sample product ID
+
+        fetch(`http://127.0.0.1:8000/store/products/${productId}`)
+            .then(response => response.json())
+            .then(product => {
+                const { description } = product;
+                document.getElementById('product-description-all').textContent = description;
+            })
+            .catch(error => console.error('Error fetching product details:', error));
+
+        fetch(`http://127.0.0.1:8000/store/products/${productId}/reviews/`)
+            .then(response => response.json())
+            .then(reviews => {
+                const reviewsList = document.getElementById('reviews-list');
+                reviewsList.innerHTML = ''; // Clear previous content
+
+                if (reviews.length === 0) {
+                    reviewsList.innerHTML = '<p>No reviews available</p>';
+                    return;
+                }
+
+                reviews.forEach(review => {
+                    const reviewHtml = `
+                    <div class="d-flex">
+                        <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                        <div class="" style='width: 100%;'>
+                            <p class="mb-2" style="font-size: 14px;">${review.date}</p>
+                            <div class="d-flex justify-content-between">
+                                <h5>${review.name}</h5>
+                                <div class="d-flex mb-3">
+                                    ${generateStarRating(review.rating)}
+                                </div>
+                            </div>
+                            <p>${review.description}</p>
+                        </div>
+                    </div>
+                `;
+                    reviewsList.innerHTML += reviewHtml;
+                });
+            })
+            .catch(error => console.error('Error fetching product reviews:', error));
+    });
+
+    // Function to generate star rating HTML dynamically
+    function generateStarRating(rating) {
+        const maxRating = 5;
+        let starsHtml = '';
+
+        for (let i = 1; i <= maxRating; i++) {
+            if (i <= rating) {
+                starsHtml += '<i class="fa fa-star text-secondary"></i>';
+            } else {
+                starsHtml += '<i class="fa fa-star"></i>';
+            }
+        }
+
+        return starsHtml;
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const productId = 648; // Sample product ID
+        const reviewForm = document.getElementById('review-form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const reviewInput = document.getElementById('review');
+        const stars = document.querySelectorAll('.review-star');
+
+        // Add event listeners to each star for toggling their state
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                toggleStar(index);
+            });
+        });
+
+        reviewForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('name', nameInput.value);
+            formData.append('email', emailInput.value);
+            formData.append('description', reviewInput.value);
+            formData.append('rating', calculateRating());
+
+            fetch(`http://127.0.0.1:8000/store/products/${productId}/reviews/`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Review submitted successfully!');
+                        nameInput.value = '';
+                        emailInput.value = '';
+                        reviewInput.value = '';
+                    } else {
+                        alert('Failed to submit review');
+                    }
+                })
+                .catch(error => console.error('Error submitting review:', error));
+        });
+    });
+
+    // Function to toggle the state of a star and update the visual appearance
+    function toggleStar(index) {
+        const stars = document.querySelectorAll('.review-star');
+
+        stars.forEach((star, i) => {
+            if (i <= index) {
+                star.classList.remove('text-muted');
+                star.classList.add('text-secondary');
+            } else {
+                star.classList.add('text-muted');
+            }
+        });
+    }
+
+    // Function to calculate the rating based on the selected stars
+    function calculateRating() {
+        const stars = document.querySelectorAll('.review-star');
+        let rating = 0;
+
+        stars.forEach(star => {
+            if (!star.classList.contains('text-muted')) {
+                rating++;
+            }
+        });
+
+        return rating;
+    }
+
+</script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const relatedProductsCarousel = document.getElementById('related-products-carousel');
+
+        // Function to fetch products of a similar category
+        function fetchRelatedProducts(collectionId) {
+            fetch(`http://127.0.0.1:8000/store/products/?collection_id=${collectionId}&limit=10`)
+                .then(response => response.json())
+                .then(data => {
+                    renderRelatedProducts(data.results);
+                })
+                .catch(error => console.error('Error fetching related products:', error));
+        }
+
+        // Function to render related products in the carousel
+        function renderRelatedProducts(products) {
+            relatedProductsCarousel.innerHTML = ''; // Clear existing content
+
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.classList.add('border', 'border-primary', 'rounded', 'position-relative', 'vesitable-item');
+
+                productItem.innerHTML = `
+                <div class="vesitable-img">
+                    <img src="${product.images[0] || 'img/placeholder.jpg'}" class="img-fluid w-100 rounded-top" alt="">
+                </div>
+                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+                    ${product.collection_name}
+                </div>
+                <div class="p-4 pb-0 rounded-bottom">
+                    <h4>${product.title}</h4>
+                    <p>${product.description}</p>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <p class="text-dark fs-5 fw-bold">$${product.unit_price.toFixed(2)} / kg</p>
+                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary">
+                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                    </div>
+                </div>
+            `;
+
+                relatedProductsCarousel.appendChild(productItem);
+            });
+        }
+        // Sample collection ID (replace with actual ID)
+        const collectionId = 4;
+
+        // Fetch and render related products on page load
+        fetchRelatedProducts(collectionId);
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var apiUrl = '/store/collections/';
+        let categories = document.getElementById('categories-list');
+
+        // Fetch data from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Filter categories with items
+                var categoriesWithItems = data.filter(function (category) {
+                    return category.products_count > 0;
+                });
+
+                // Generate dynamic HTML for each category
+                categoriesWithItems.forEach(function (category) {
+                    var categoryHtml = '<li>' +
+                        '<div class="d-flex justify-content-between fruite-name">' +
+                        '<a href="#" data-collection-id="' + category.id + '">' +
+                        '<i class="fas fa-apple-alt me-2"></i>' +
+                        category.title +
+                        '</a>' +
+                        '<span>(' + category.products_count + ')</span>' +
+                        '</div>' +
+                        '</li>';
+
+                    categories.innerHTML += categoryHtml;
+                });
+
+                // Add event listeners to category links
+                document.querySelectorAll('#categories-list a').forEach(function (link) {
+                    link.addEventListener('click', function (event) {
+                        const collectionId = link.getAttribute('data-collection-id');
+                        handleCategoryClick(event, collectionId);
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+</script>
+{% endblock %}

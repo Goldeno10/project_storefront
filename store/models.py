@@ -37,12 +37,31 @@ class Product(models.Model):
     collection = models.ForeignKey(
         Collection, on_delete=models.PROTECT, related_name='products')
     promotions = models.ManyToManyField(Promotion, blank=True)
+    likes = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, through='Like', related_name='liked_products', blank=True)
+    average_rating = models.FloatField(default=0.0)
+
+    def get_average_rating(self):
+        reviews = self.reviews.all()
+        if reviews:
+            return sum([review.rating for review in reviews]) / len(reviews)
+        return 0
 
     def __str__(self) -> str:
         return self.title
 
     class Meta:
         ordering = ['title']
+
+
+class Like(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.product.title}"
 
 
 class ProductImage(models.Model):
@@ -146,5 +165,6 @@ class Review(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='reviews')
     name = models.CharField(max_length=255)
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
     description = models.TextField()
     date = models.DateField(auto_now_add=True)

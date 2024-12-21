@@ -4,15 +4,24 @@ DEBUG = True
 
 SECRET_KEY = 'django-insecure-hs6j037urx6iav+7#10%-vu4l4f5@@-1_zo)oft4g7$vf2$jmp'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'storefront3',
+#         'HOST': 'localhost',
+#         'USER': 'elgenius',
+#         'PASSWORD': 'Mib157876#'
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'storefront3',
-        'HOST': 'localhost',
-        'USER': 'elgenius',
-        'PASSWORD': 'Mib157876#'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 CELERY_BROKER_URL = 'redis://redis:6379/1'
 

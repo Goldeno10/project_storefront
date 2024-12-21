@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,50 +10,64 @@
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1a1a1a;
+        color: #f4f4f9;
         margin: 0;
         padding: 0;
-        color: #333;
       }
       .container {
         max-width: 800px;
         margin: 50px auto;
         padding: 20px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: #2c2c2c;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
       h1,
       h2 {
         text-align: center;
-        color: #007bff;
+        color: #ff8c00;
+        margin-bottom: 20px;
       }
       ul {
         list-style-type: none;
         padding: 0;
       }
       li {
-        margin: 10px 0;
+        margin: 15px 0;
+        background: #333;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+      li:hover {
+        background: #444;
       }
       a {
+        display: block;
+        padding: 10px 15px;
         text-decoration: none;
-        color: #007bff;
+        color: #ff8c00;
+        font-weight: bold;
+        transition: color 0.3s;
       }
       a:hover {
-        text-decoration: underline;
+        color: #ffa733;
       }
       .footer {
         text-align: center;
-        margin-top: 20px;
-        color: #777;
+        margin-top: 30px;
+        color: #888;
+        font-size: 0.9em;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Welcome to MIB E-Commerce API</h1>
-      <p>Explore and interact with our API endpoints.</p>
+      <p style="text-align: center">
+        Explore and interact with our API endpoints.
+      </p>
 
       <h2>Available Endpoints</h2>
       <ul>
@@ -63,7 +79,7 @@
       </ul>
 
       <h2>Documentation</h2>
-      <p>
+      <p style="text-align: center">
         Refer to the <a href="/README.md">README</a> for setup and usage
         instructions.
       </p>

@@ -1,17 +1,74 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>MIB E-Commerce API</title>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1,
+      h2 {
+        text-align: center;
+        color: #007bff;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin: 10px 0;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        color: #777;
+      }
+    </style>
   </head>
   <body>
-    <div class="home-page">
-      <!-- <img src="{% static 'core/logo.svg' %}" alt="Logo" class="logo" /> -->
-      <h1>MIB Ecommerce Backend</h1>
+    <div class="container">
+      <h1>Welcome to MIB E-Commerce API</h1>
+      <p>Explore and interact with our API endpoints.</p>
+
+      <h2>Available Endpoints</h2>
+      <ul>
+        <li><a href="/admin/">Admin Panel</a></li>
+        <li><a href="/playground/">Playground</a></li>
+        <li><a href="/store/">Store API</a></li>
+        <li><a href="/auth/">Authentication</a></li>
+        <li><a href="/__debug__/">Debug Toolbar</a></li>
+      </ul>
+
+      <h2>Documentation</h2>
+      <p>
+        Refer to the <a href="/README.md">README</a> for setup and usage
+        instructions.
+      </p>
+
+      <div class="footer">&copy; 2024 MIB E-Commerce Backend</div>
     </div>
   </body>
 </html>
